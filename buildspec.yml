@@ -1,6 +1,11 @@
 version: 0.2
 
 phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $ECR_URI
+
   build:
     commands:
       - echo "Building Spring Boot application..."
@@ -21,4 +26,4 @@ phases:
 
 artifacts:
   files:
-    - imagedefinitions.json
+    - complete/imagedefinitions.json
